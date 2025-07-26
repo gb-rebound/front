@@ -1,28 +1,101 @@
-const sidebar_mainbtns = document.querySelectorAll(".menu-btn");
+// 사이드 바 메인 메뉴 클릭 시 리스트 열고 닫기 + 아이콘
+// 사이드 바 서브 링크 클릭 시 이벤트 + 다른 리스트 닫기
+// 상단 tab-name 이벤트
+const sideMenuButtons = document.querySelectorAll(".menu-btn");
+const sideSubLinks = document.querySelectorAll(".rebound-link");
+const sideSubLists = document.querySelectorAll(".menu-sub-list");
+const tabNames = document.querySelectorAll(".tab-name");
 
-sidebar_mainbtns.forEach((sidebar_mainbtn) => {
-    sidebar_mainbtn.addEventListener("click", (e) => {
+sideMenuButtons.forEach((sideMenuButton) => {
+    sideMenuButton.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const subMenuId = sidebar_mainbtn.getAttribute("aria-controls");
-        const subMenu = document.getElementById(subMenuId);
+        const targetId = sideMenuButton.getAttribute("aria-controls");
+        // aria-controls와 같은 속성 가져올 땐 getAttribute();
+        const targetSubList = document.getElementById(targetId);
+        const targetIcon = sideMenuButton.querySelector(".icon-wrapper i");
 
-        const icon = sidebar_mainbtn.querySelector(".icon-wrapper i");
-
-        if (subMenu.classList.contains("show")) {
-            subMenu.classList.remove("show");
-            sidebar_mainbtn.setAttribute("aria-expanded", "false");
-            sidebar_mainbtn.classList.add("collapsed");
-
-            icon.classList.remove("mdi-chevron-down");
-            icon.classList.add("mdi-chevron-right");
+        if (targetSubList.classList.contains("show")) {
+            targetSubList.classList.remove("show");
+            targetIcon.classList.remove("mdi-chevron-down");
+            targetIcon.classList.add("mdi-chevron-right");
         } else {
-            subMenu.classList.add("show");
-            sidebar_mainbtn.setAttribute("aria-expanded", "true");
-            sidebar_mainbtn.classList.remove("collapsed");
-
-            icon.classList.remove("mdi-chevron-right");
-            icon.classList.add("mdi-chevron-down");
+            targetSubList.classList.add("show");
+            targetIcon.classList.remove("mdi-chevron-right");
+            targetIcon.classList.add("mdi-chevron-down");
         }
     });
+});
+
+sideSubLinks.forEach((sideSubLink) => {
+    sideSubLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // 모든 서브 링크 active 초기화
+        sideSubLinks.forEach((resetSubLink) => {
+            resetSubLink.classList.remove("active");
+        });
+        sideSubLink.classList.add("active");
+
+        // 상위 메뉴 버튼 current 초기화 + 설정
+        sideMenuButtons.forEach((resetMenuButton) => {
+            resetMenuButton.classList.remove("current");
+        });
+
+        const parentSubList = sideSubLink.parentElement.parentElement;
+        const parentButton = document.querySelector(
+            `.menu-btn[aria-controls = "${parentSubList.id}"]`
+        );
+        parentButton.classList.add("current");
+
+        // 다른 리스트 닫기
+        sideSubLists.forEach((sideSubList) => {
+            if (sideSubList !== parentSubList) {
+                sideSubList.classList.remove("show");
+
+                const nonTargetButton = document.querySelector(
+                    `.menu-btn[aria-controls="${sideSubList.id}"]`
+                );
+                if (nonTargetButton) {
+                    const nonTargetIcon =
+                        nonTargetButton.querySelector(".icon-wrapper i");
+                    nonTargetIcon.classList.remove("mdi-chevron-down");
+                    nonTargetIcon.classList.add("mdi-chevron-right");
+                }
+            }
+        });
+
+        // 상단 tab-name 활성화
+        const linkText = sideSubLink.textContent.trim().replace("-", "").trim();
+        // 링크 이름에서 기호(-)랑 공백 제거한 텍스트
+        tabNames.forEach((tabName) => tabName.classList.remove("active"));
+        tabNames.forEach((tabNameCheck) => {
+            if (tabNameCheck.textContent.trim() === linkText) {
+                tabNameCheck.classList.add("active");
+            }
+        });
+    });
+});
+
+// 상단 오른쪽 관리자 이메일 클릭 시 리스트 출력
+// 출력된 리스트 다시 닫기
+const userMenuWrapper = document.querySelector(".user-menu-wrapper");
+const userMenuContent = document.querySelector(".user-menu-content");
+
+userMenuWrapper.addEventListener("click", (e) => {
+    if (userMenuContent.classList.contains("show")) {
+        userMenuContent.classList.remove("show");
+    } else {
+        userMenuContent.classList.add("show");
+    }
+});
+
+document.addEventListener("click", (e) => {
+    if (
+        // userMenuContent 안넣어주면 안에 걸 눌러도 리스트가 닫힌다.
+        !userMenuWrapper.contains(e.target) &&
+        !userMenuContent.contains(e.target)
+    ) {
+        userMenuContent.classList.remove("show");
+    }
 });
