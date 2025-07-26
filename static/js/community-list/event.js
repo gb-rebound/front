@@ -38,7 +38,6 @@ const curationSpan = document.querySelector(
 
 // 숨고픽 버튼 나타내기
 hoverArea.addEventListener("mouseenter", (e) => {
-    prevButton.style.visibility = "visible";
     nextButton.style.visibility = "visible";
 });
 
@@ -58,7 +57,17 @@ prevButton.addEventListener("click", (e) => {
         hotTopic.style.transition = `transform 0.5s`;
         curationSpan.textContent = `${topicCount + 1}/3`;
     }
-    console.log(topicCount);
+
+    if (topicCount > 0) {
+        prevButton.style.visibility = "visible";
+    } else {
+        prevButton.style.visibility = "hidden";
+    }
+    if (topicCount < 2) {
+        nextButton.style.visibility = "visible";
+    } else {
+        nextButton.style.visibility = "hidden";
+    }
 });
 
 nextButton.addEventListener("click", (e) => {
@@ -68,16 +77,90 @@ nextButton.addEventListener("click", (e) => {
         hotTopic.style.transition = `transform 0.5s`;
         curationSpan.textContent = `${topicCount + 1}/3`;
     }
+
+    if (topicCount > 0) {
+        prevButton.style.visibility = "visible";
+    } else {
+        prevButton.style.visibility = "hidden";
+    }
+    if (topicCount < 2) {
+        nextButton.style.visibility = "visible";
+    } else {
+        nextButton.style.visibility = "hidden";
+    }
 });
 
 // 최신 사진 리뷰
 const communityReview = document.querySelector(
     "section.community-review-section div.slick-slider div.slick-list"
 );
-
 const reviewPrevButton = document.querySelector(
-    "button.slick-arrow.slick-prev"
+    "div.d-none.slick-initialized button.slick-arrow.slick-prev"
 );
 const reviewNextButton = document.querySelector(
-    "button.slick-arrow.slick-next"
+    "div.d-none.slick-initialized button.slick-arrow.slick-next"
 );
+let reviewCount = 0;
+
+reviewPrevButton.style.visibility = "hidden";
+reviewNextButton.style.visibility = "visible";
+
+reviewPrevButton.addEventListener("click", (e) => {
+    if (reviewCount > 0) {
+        reviewCount--;
+        communityReview.style.transform = `translate(-${600 * reviewCount}px)`;
+        communityReview.style.transition = `transform 0.5s`;
+    }
+    console.log("들어옴");
+
+    if (reviewCount > 0) {
+        reviewPrevButton.style.visibility = "visible";
+    } else {
+        reviewPrevButton.style.visibility = "hidden";
+    }
+    if (reviewCount < 2) {
+        reviewNextButton.style.visibility = "visible";
+    } else {
+        reviewNextButton.style.visibility = "hidden";
+    }
+});
+
+reviewNextButton.addEventListener("click", (e) => {
+    if (reviewCount < 2) {
+        reviewCount++;
+        communityReview.style.transform = `translate(-${600 * reviewCount}px)`;
+        communityReview.style.transition = `transform 0.5s`;
+    }
+
+    if (reviewCount > 0) {
+        reviewPrevButton.style.visibility = "visible";
+    } else {
+        reviewPrevButton.style.visibility = "hidden";
+    }
+    if (reviewCount < 2) {
+        reviewNextButton.style.visibility = "visible";
+    } else {
+        reviewNextButton.style.visibility = "hidden";
+    }
+});
+
+// 위로 가기 버튼 나타나기/숨기기
+const topButton = document.querySelector("a#top-btn.top-btn");
+
+topButton.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+topButton.style.opacity = 0;
+topButton.style.transform = "trnaslateY(20px)";
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY === 0) {
+        topButton.style.opacity = 0;
+        topButton.style.transform = "translateY(30px)";
+        setTimeout(() => {
+            topButton.style.visibility = "hidden";
+        }, 300);
+    } else {
+        topButton.style.visibility = "visible";
+        topButton.style.opacity = 1;
+        topButton.style.transform = "translateY(-20px)";
+    }
+});

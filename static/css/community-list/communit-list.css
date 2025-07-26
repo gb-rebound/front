@@ -536,7 +536,6 @@ ul.category {
 }
 
 /* 공지 이벤트 스타일 설정 - slick-slide event style */
-
 div.community-notice-slick .slick-list .slick-track {
     width: 632px;
     /* overflow: hidden; */
@@ -555,7 +554,7 @@ div.community-notice-slick .slick-list .slick-track {
     height: 53px;
 }
 
-/*  */
+/* --------- */
 
 .community-notice-slick .community-notice-wrapper {
     width: 632px;
@@ -617,7 +616,6 @@ div.community-notice-slick .slick-list .slick-track {
 }
 
 /* 숨고픽 이벤트 스타일 설정 - curation event style */
-
 section.curation div.slick-slider div.slick-total {
     width: 612px;
     position: relative;
@@ -635,8 +633,7 @@ section.curation div.slick-slider div.slick-list .slick-slide {
     width: 305px;
     height: 84px;
 }
-
-/*  */
+/* --------- */
 
 .curation .slick-slider {
     position: relative;
@@ -806,14 +803,33 @@ button.slick-arrow::before {
     outline: none;
     background: transparent;
 }
-/*  */
+/* --------- */
 
 /* 만족도 높은 최신 사진 리뷰 버튼 스타일 */
 .community-review-section .slick-slider .slick-arrow.slick-prev {
     left: -1.125rem;
     background-image: url("data:image/svg+xml,%3csvg%20width='48'%20height='48'%20viewBox='0%200%2048%2048'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter%20x='-12.5%25'%20y='-10%25'%20width='125%25'%20height='125%25'%20filterUnits='objectBoundingBox'%20id='a'%3e%3cfeOffset%20dy='1'%20in='SourceAlpha'%20result='shadowOffsetOuter1'/%3e%3cfeGaussianBlur%20stdDeviation='1.5'%20in='shadowOffsetOuter1'%20result='shadowBlurOuter1'/%3e%3cfeColorMatrix%20values='0%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200.2%200'%20in='shadowBlurOuter1'/%3e%3c/filter%3e%3ccircle%20id='b'%20cx='24'%20cy='24'%20r='20'/%3e%3c/defs%3e%3cg%20fill='none'%20fill-rule='evenodd'%3e%3cg%3e%3cuse%20fill='%23000'%20filter='url(%23a)'%20xlink:href='%23b'/%3e%3cuse%20fill='%23FFF'%20xlink:href='%23b'/%3e%3c/g%3e%3cpath%20d='M12%2012h24v24H12z'/%3e%3cpath%20stroke='%23888'%20stroke-width='1.7'%20stroke-linecap='round'%20stroke-linejoin='round'%20d='m26%2031-7-7%207-7'/%3e%3c/g%3e%3c/svg%3e");
 }
-/*  */
+/* --------- */
+
+/* 만족도 리뷰 이벤트 스타일 */
+section.community-review-section div.slick-initialized div.slick-list {
+    width: 1800px;
+    height: 345px;
+}
+
+section.community-review-section div.slick-initialized div.community-review-list-total {
+    width: 600px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+section.community-review-section div.slick-initialized div.slick-list div.slick-track div.slick-slide {
+    width: 300px;
+    height: 345px;
+}
+/* --------- */
 
 .community-review-section {
     margin-bottom: 2.5rem;
@@ -1088,6 +1104,10 @@ section.item-wrapper .prisma-typography.body14\:regular {
     height: 5rem;
     border: solid .0625rem #EFF1F5;
     border-radius: 8px;
+}
+
+.top-btn {
+    transition: transform .8s ease-in-out;
 }
 
 .top-btn {
